@@ -1,0 +1,174 @@
+body {
+    background: linear-gradient(to right, #F2359D,#AD2C92); /* Adjust colors as needed */
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    background: linear-gradient(to right, #F2F2F2,#F2F2F2,#068BBF,#034C8C,#034C8C); /* Adjust colors as needed */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the content horizontally */
+    gap: 20px; /* Adds space between the logo and the text */
+}
+
+.logo {
+    width: 50px; /* Adjust size as necessary */
+    height: auto;
+    opacity: 0.7; /* Makes the logo 30% transparent */
+}
+
+
+header h1 {
+    color: #F0F0F0; /* Change this to the desired color */
+    font-size: 32px; /* You can also adjust the font size if needed */
+    margin: 0; /* Remove extra space */
+}
+
+
+/* Main container with flexbox for horizontal layout */
+.main-container-horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px; /* Add space between the sections */
+}
+
+.left-section, .right-section {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px; /* Optional: Control the width of each section */
+}
+
+.button-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#select-candidate-btn {
+    padding: 10px 20px;
+    background-color: #ec008c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Result section below */
+.result-container {
+    display: flex;
+    padding: 20px;
+}
+
+.keyword-filter label {
+    display: block; /* This makes each label take up a full line */
+    margin-bottom: 5px; /* Optional: Adds space between each keyword */
+}
+
+.left-filter {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-resumes {
+    flex: 2;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resume-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.resume-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#send-email-btn {
+    padding: 10px 20px;
+    background-color: #0072ce;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Style for the entire body */
+body {
+    background-color: #f4f4f4;
+}
+
+/* Left Column (Filter Options) */
+.left-filter {
+    background-color: #fff; /* Light background for the filter */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Column (Filtered Resumes) */
+.right-resumes {
+    background-color: #f7f7f7; /* Light gray background for resumes */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Upload CVs and Job Descriptions */
+.left-section, .right-section {
+    background-color: #fff; /* White background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Style */
+#select-candidate-btn, #send-email-btn {
+    background-color: #ec008c; /* Bright pink background for buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#send-email-btn {
+    background-color: #0072ce; /* Blue button for send email */
+}
+
+.resume-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
