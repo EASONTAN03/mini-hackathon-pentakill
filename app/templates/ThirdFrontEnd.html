@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Selection Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for the file icon -->
+    <!-- Add this line to link your favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='experian.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ThirdFrontEnd.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- ChatBot Section (Full Width) -->
+        <div class="cv-section">
+            <!-- New title container with image -->
+            <div class="chatbot-header">
+                <img src="{{ url_for('static', filename='experian.png') }}" alt="Bot Icon" class="bot-icon">
+                <h2>CANDIDATE SELECTION CHATBOT</h2>
+            </div>
+
+            <!-- Chat Area -->
+            <div id="chat-box">
+                <div class="message bot">
+                    <p><strong>Bot:</strong> How can I help you today?</p>
+                </div>
+            </div>
+
+            <!-- Input Field for Conversation with File Upload Icon -->
+            <div class="bubble">
+                <label for="file-upload" class="custom-file-upload">
+                    <i class="fas fa-paperclip"></i> <!-- Paperclip icon -->
+                </label>
+                <input type="file" id="file-upload" style="display:none;" multiple />
+                <input type="text" id="chat-input" placeholder="Ask about CVs...">
+                <button id="sendButton" onclick="processInput()">Send</button>
+            </div>
+            <div id="selected-files" class="selected-files"></div> <!-- New element to show selected files -->
+        </div>
+    </div>
+    <script>
+        // Function to update the display of selected files
+        function updateSelectedFilesDisplay() {
+            const fileInput = document.getElementById('file-upload');
+            const selectedFilesDiv = document.getElementById('selected-files');
+            selectedFilesDiv.innerHTML = ''; // Clear previous file names
+
+            if (fileInput.files.length > 0) {
+                const fileNames = Array.from(fileInput.files).map(file => file.name);
+                selectedFilesDiv.innerHTML = `<p>Selected files: ${fileNames.join(', ')}</p>`;
+            }
+        }
+
+
+        async function processInput() {
+            const inputField = document.getElementById('chat-input');
+            const input = inputField.value;
+            const chatBox = document.getElementById('chat-box');
+    
+            // Append user message
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            userMessage.innerHTML = `<p>${input}</p>`;
+            chatBox.appendChild(userMessage);
+    
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('message', input);
+    
+            // Append files if any
+            const fileInput = document.getElementById('file-upload');
+            for (let file of fileInput.files) {
+                formData.append('files', file);
+            }
+
+            document.getElementById('chat-input').value = '';
+    
+            // Send AJAX request to backend
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const data = await response.json();
+                
+                // Append bot response
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.innerHTML = `<p><strong>Bot:</strong> ${data.ai_response}</p>`;
+                chatBox.appendChild(botMessage);
+    
+                // Scroll to the bottom after new messages
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                
+                // Clear input field after sending message
+                inputField.value = '';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+            
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default Enter behavior (like form submission)
+                document.getElementById('sendButton').click(); // Trigger the Send button click event
+            }
+        });
+
+    </script>
+    
+    
+</body>
+</html>
