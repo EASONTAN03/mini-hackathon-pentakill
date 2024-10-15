@@ -1,8 +1,9 @@
-azure_storage==0.37.0
-joblib==1.4.2
-matplotlib==3.9.2
 numpy==2.1.2
 pandas==2.2.3
-PyYAML==6.0.2
-PyYAML==6.0.2
-scikit_learn==1.5.2
+openai 
+PyPDF2
+python-docx 
+Flask
+python-dotenv
+os
+
