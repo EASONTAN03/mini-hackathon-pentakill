@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Montserrat;
+    color: white;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E4E0E1;
+    height: 100vh;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    height: 100%;
+    padding: 60px;
+    margin: 20px;
+    border-radius: 20px; /* Rounded corners for the entire chatbox */
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.cv-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px; /* Rounded corners for the chat section */
+    overflow: hidden; /* Ensure rounded corners are applied */
+}
+
+#chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0,  0.35);
+    padding: 80px; /* Increase padding to add space around the chat area */
+    background-color: #2D2727;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px; /* Rounded corners for chat box */
+}
+
+/* Bubble styles for messages */
+.message {
+    display: inline-block;
+    margin-bottom: 20px; /* Increase space between messages */
+    padding: 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 50%; /* Reduce width to centralize the bubbles more */
+}
+
+    /* Bot message styling (left-aligned) */
+    .message.bot {
+        background-color: whitesmoke;
+        color: black;
+        align-self: flex-start; /* Align bot messages to the left */
+        border-radius: 20px 20px 20px 0;
+        margin-left: 10px;
+        margin-right: auto;
+    }
+
+    /* User message styling (right-aligned) */
+    .message.user {
+        background-color: #068BBF;
+        color: white;
+        align-self: flex-end; /* Align user messages to the right */
+        border-radius: 20px 20px 0 20px;
+        margin-right: 10px;
+        margin-left: auto;
+    }
+
+/* Centered header with image */
+.chatbot-header {
+    display: flex;
+    justify-content: center; /* Center align the title and image */
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style for the bot icon next to the title */
+.bot-icon {
+    width: 40px; /* Adjust size of the icon */
+    height: 40px;
+    margin-right: 10px; /* Space between the icon and the title */
+}
+
+
+
+/* Input field bubble at the bottom */
+.bubble {
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+    font-family: Montserrat;
+}
+
+    .bubble input[type="text"] {
+        width: 100%;
+        border: none;
+        background-color: white;
+        outline: none;
+        font-size: 16px;
+        padding: 10px;
+        margin-right: 10px;
+        font-family: Montserrat;
+    }
+
+.custom-file-upload {
+    cursor: pointer;
+    font-size: 20px;
+    padding-right: 10px;
+    color: black; /* Set the icon color to black */
+}
+
+    .custom-file-upload:hover {
+        color: #555; /* Optional: Change color on hover */
+    }
+
+
+
+button {
+    padding: 10px;
+    background-color: #2D2727; /* Change this to any color you like */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin-right: 5px;
+    font-family: Montserrat;
+}
+
+    /* Button hover effect */
+    button:hover {
+        background-color: grey; /* Darker color on hover */
+    }
+
+/* Title styling for Candidate Selection Chatbot */
+h2 {
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    font-family: Montserrat;
+    font-weight: 500; /* Use 700 for bold */
+    margin-left: 15px;
+}
+img {
+    transform: scale(1.5);
+}
