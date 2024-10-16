@@ -10,7 +10,7 @@ from num2words import num2words
 
 dotenv.load_dotenv()   
 
-def process_files(resume_csv, jd_csv):
+def process_csv_files(resume_csv, jd_csv):
     df = pd.read_csv(resume_csv) 
     jd_df = pd.read_csv(jd_csv)
     pd.options.mode.chained_assignment = None 

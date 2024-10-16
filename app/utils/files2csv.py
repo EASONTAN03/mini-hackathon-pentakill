@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import pdfplumber
+import csv
 # from docx import Document as DocxDocument
 # from spire.doc import Document as SpireDocument
 import re
@@ -41,7 +42,7 @@ def process_files(folder_path):
         data.append({'name': filename, 'ocr': text})
     return pd.DataFrame(data)
 
-def save_csv(input_dir):
+def save_csv(input_dir, filename):
     # Set the folder path using the current working directory
     current_directory = os.getcwd()  # Get the current working directory
     folder_name = 'output'
@@ -52,15 +53,17 @@ def save_csv(input_dir):
     df = process_files(input_dir)
 
     # Specify the output path for the CSV file in the current directory
-    output_csv_path = os.path.join(current_directory, 'output', 'resumes.csv')
+    output_csv_path = os.path.join(current_directory, 'output', filename)
 
     # Save the DataFrame to a CSV file
-    df.to_csv(output_csv_path, index=False)
+    # df.to_csv(output_csv_path, index=False)
+    df.to_csv(output_csv_path, index=False, escapechar='\\', quoting=csv.QUOTE_ALL)
 
     return output_csv_path
 
 def delete_all_files_in_directory(directory_path):
     # Ensure the provided path is a directory
+    
     if not os.path.isdir(directory_path):
         print(f"The path {directory_path} is not a valid directory.")
         return

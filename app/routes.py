@@ -78,20 +78,29 @@ def upload_files():
 @bp.route('/chat', methods=['POST'])
 def chat():
     user_input = request.form.get('message')
-    # Process files if any
-    resume_path = save_csv("upload_cv","resume.csv")
-    jd_path= save_csv("upload_jd","jd.csv")
-    print("Done extract csv")
+    
+    if not os.path.isdir("upload_cv"):
+        print(f"Directory '{"upload_cv"}' does not exist.")
+        ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
+        print("Done ai reponse")
+    else:
+        resume_path = save_csv("upload_cv","resume.csv")
+        jd_path= save_csv("upload_jd","jd.csv")
+        print("Done extract csv")
 
-    df,jd_df=process_files(resume_path,jd_path)
-    print("Done processed resume")
+        print(resume_path,jd_path)
 
-    prompts = generate_prompts(df, jd_df["ocr"][0], user_input)
-    ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
-    print("Done ai reponse")
+        df,jd_df=process_csv_files(resume_path,jd_path)
+        print("Done processed resume")
 
+        prompts = generate_prompts(df, jd_df["ocr"][0], user_input)
+        ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
+        print("Done ai reponse")
 
     delete_all_files_in_directory("upload_cv")
+    delete_all_files_in_directory("upload_jd")
+    delete_all_files_in_directory("output")
+
 
     if isinstance(ai_response, str):
         return jsonify({'ai_response': ai_response})
