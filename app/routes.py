@@ -74,13 +74,11 @@ def upload_files():
         'jd_files_saved': saved_jd_files
     }), 200
 
-
 @bp.route('/chat', methods=['POST'])
 def chat():
     user_input = request.form.get('message')
-    
-    if not os.path.isdir("upload_cv"):
-        print(f"Directory '{"upload_cv"}' does not exist.")
+
+    if len(os.listdir("output")) == 0:
         ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
         print("Done ai reponse")
     else:
