@@ -1,17 +1,14 @@
 import re
-import requests
 import numpy as np
 import pandas as pd
 from openai import AzureOpenAI, OpenAIError
 import os
 import dotenv
-import sys
-from num2words import num2words
 
 dotenv.load_dotenv()   
 
-def process_csv_files(resume_csv, jd_csv):
-    df = pd.read_csv(resume_csv) 
+def process_csv_files(cv_csv, jd_csv):
+    df = pd.read_csv(cv_csv) 
     jd_df = pd.read_csv(jd_csv)
     pd.options.mode.chained_assignment = None 
 
@@ -154,8 +151,6 @@ def search_docs(df, jd_df, top_n=1):
     return df[['name', 'ocr', 'top_matches', 'best_match_similarity', 'rank']]
 
 
-
-
 def get_ai_response(text, ENDPOINT):
     full_endpoint = os.getenv(ENDPOINT)
     if ENDPOINT=="AZURE_OPENAI_GPT4_ENDPOINT":
@@ -192,7 +187,6 @@ def get_ai_response(text, ENDPOINT):
     
     except Exception as e:
         return f"An error occurred: {str(e)}"
-
 
 def generate_prompts(df, job_description, user_input):
     df=df[:3]

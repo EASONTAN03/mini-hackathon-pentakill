@@ -81,14 +81,14 @@ def chat():
 
         
     if len(os.listdir("output")) == 0:
-        resume_path = save_csv("upload_cv","resume.csv")
+        cv_path = save_csv("upload_cv","cv.csv")
         jd_path= save_csv("upload_jd","jd.csv")
         print("Done extract csv")
 
-        print(resume_path,jd_path)
+        print(cv_path,jd_path)
 
-        df,jd_df=process_csv_files(resume_path,jd_path)
-        print("Done processed resume")
+        df,jd_df=process_csv_files(cv_path,jd_path)
+        print("Done processed cv")
 
         prompts = generate_prompts(df, jd_df["ocr"][0], user_input)
         ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
