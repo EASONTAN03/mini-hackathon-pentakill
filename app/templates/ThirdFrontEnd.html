@@ -14,36 +14,65 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='ThirdFrontEnd.css') }}">
+    <meta charset="UTF-8">
 </head>
 <body>
     <div class="container">
         <!-- ChatBot Section (Full Width) -->
         <div class="cv-section">
-            <!-- New title container with image -->
             <div class="chatbot-header">
-                <img src="{{ url_for('static', filename='experian.png') }}" alt="Bot Icon" class="bot-icon">
+                <img src="static/experian.png" alt="Bot Icon" class="bot-icon">
                 <h2>CANDIDATE SELECTION CHATBOT</h2>
             </div>
 
-            <!-- Chat Area -->
+            <!-- Chat Area (Place above the File Upload Section) -->
             <div id="chat-box">
                 <div class="message bot">
                     <p><strong>Bot:</strong> How can I help you today?</p>
                 </div>
             </div>
-
-            <!-- Input Field for Conversation with File Upload Icon -->
+            <!-- Input Field for Conversation -->
             <div class="bubble">
-                <label for="file-upload" class="custom-file-upload">
-                    <i class="fas fa-paperclip"></i> <!-- Paperclip icon -->
-                </label>
-                <input type="file" id="file-upload" style="display:none;" multiple />
                 <input type="text" id="chat-input" placeholder="Ask about CVs...">
                 <button id="sendButton" onclick="processInput()">Send</button>
             </div>
-            <div id="selected-files" class="selected-files"></div> <!-- New element to show selected files -->
+
+            <!-- File Upload Section -->
+            <div class="file-upload-section">
+
+                <!-- CV Files Upload and Display -->
+                <div class="file-upload">
+                    <label class="custom-file-upload">
+                        <i class="fas fa-paperclip"></i> Upload CV Files (PDF, DOCX)
+                        <input type="file" id="cv-file-upload" style="display:none;" accept=".pdf,.docx" multiple onchange="displaySelectedFiles('cv-file-upload', 'cv-file-list')" />
+                    </label>
+                    <div class="selected-files">
+                        <h3>Selected CV Files:</h3>
+                        <ul id="cv-file-list"></ul>
+                    </div>
+                </div>
+
+                <!-- JD Files Upload and Display -->
+                <div class="file-upload">
+                    <label class="custom-file-upload">
+                        <i class="fas fa-paperclip"></i> Upload JD Files (PDF, DOCX)
+                        <input type="file" id="jd-file-upload" style="display:none;" accept=".pdf,.docx" multiple onchange="displaySelectedFiles('jd-file-upload', 'jd-file-list')" />
+                    </label>
+                    <div class="selected-files">
+                        <h3>Selected JD Files:</h3>
+                        <ul id="jd-file-list"></ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Upload Button -->
+            <div class="file-upload-button">
+                <button id="uploadButton" onclick="uploadFiles()">Upload Files</button>
+            </div>
         </div>
     </div>
+
     <script>
         // Function to update the display of selected files
         function updateSelectedFilesDisplay() {
@@ -57,6 +86,53 @@
             }
         }
 
+        function displaySelectedFiles(inputId, listId) {
+            const input = document.getElementById(inputId);
+            const fileList = document.getElementById(listId);
+
+            // Clear the previous file list
+            fileList.innerHTML = '';
+
+            // Add selected files to the list
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                fileList.appendChild(listItem);
+            }
+        }
+
+        // Handle file uploads and send them to Flask backend
+        async function uploadFiles() {
+            const cvFiles = document.getElementById('cv-file-upload').files;
+            const jdFiles = document.getElementById('jd-file-upload').files;
+
+            const formData = new FormData();
+
+            // Append CV files
+            for (let file of cvFiles) {
+                formData.append('cv_files', file);
+            }
+
+            // Append JD files
+            for (let file of jdFiles) {
+                formData.append('jd_files', file);
+            }
+
+            // Send files via AJAX to Flask endpoint
+            fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('File analysis complete! Check console for details.');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
 
         async function processInput() {
             const inputField = document.getElementById('chat-input');
@@ -72,12 +148,6 @@
             // Prepare form data
             const formData = new FormData();
             formData.append('message', input);
-    
-            // Append files if any
-            const fileInput = document.getElementById('file-upload');
-            for (let file of fileInput.files) {
-                formData.append('files', file);
-            }
 
             document.getElementById('chat-input').value = '';
     
