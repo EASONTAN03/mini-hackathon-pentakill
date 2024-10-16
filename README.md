@@ -1,4 +1,3 @@
-# FakefaceDetect
 # pentakill-cv-analysis
 This project was developed for the Experaince GenAI 2.0 Hackathon and focuses on CV analysis using Azure OpenAI. The goal is to create an automated system to rank and analyze CVs based on a job description by leveraging OpenAI, text embedding, and cosine similarity algorithms. The app folder contains the core components of the project.
 
