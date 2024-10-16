@@ -77,11 +77,10 @@ def upload_files():
 @bp.route('/chat', methods=['POST'])
 def chat():
     user_input = request.form.get('message')
+    prompts = None  # Initialize prompts
 
+        
     if len(os.listdir("output")) == 0:
-        ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
-        print("Done ai reponse")
-    else:
         resume_path = save_csv("upload_cv","resume.csv")
         jd_path= save_csv("upload_jd","jd.csv")
         print("Done extract csv")
@@ -94,11 +93,13 @@ def chat():
         prompts = generate_prompts(df, jd_df["ocr"][0], user_input)
         ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
         print("Done ai reponse")
+    else:
+        prompts=f"{user_input}"
+        ai_response = get_ai_response(prompts,"AZURE_OPENAI_GPT4_ENDPOINT")
+        print("Done ai reponse")
 
     delete_all_files_in_directory("upload_cv")
     delete_all_files_in_directory("upload_jd")
-    delete_all_files_in_directory("output")
-
 
     if isinstance(ai_response, str):
         return jsonify({'ai_response': ai_response})
