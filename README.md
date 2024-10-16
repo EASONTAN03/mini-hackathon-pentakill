@@ -69,3 +69,5 @@ Interface operation
 - then input prompt into chatbox
 + for example: " I will provide you with a list of candidates' information and a job description. Your goal is to match the candidates with the job description and rank the candidates accordingly, with the most suitable candidate ranked first."
 - then click "send"
+
+Collaborators: Tan Beng Seh, Sui Wei En, Ng Rou Yan, Pah Onn Qi, Tan Yong Seng
